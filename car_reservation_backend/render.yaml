@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: car-reservation-backend
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn src.main:app"
+    plan: free
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+
