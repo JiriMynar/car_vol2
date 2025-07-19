@@ -63,7 +63,7 @@ def login():
     
     # Vytvoření JWT tokenu
     access_token = create_access_token(
-        identity=user.user_id,
+        identity=str(user.user_id),
         expires_delta=timedelta(hours=8)
     )
     
