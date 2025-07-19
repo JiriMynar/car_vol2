@@ -76,15 +76,14 @@ def create_app():
     app.register_blueprint(service_records_bp, url_prefix='/api')
     app.register_blueprint(damage_records_bp, url_prefix='/api')
 
-    # JWT error handlery
+       # JWT error handlery
     @jwt.expired_token_loader
     def expired_token_callback(jwt_header, jwt_payload):
         return jsonify({'error': 'Token vypršel'}), 401
 
     @jwt.invalid_token_loader
-def invalid_token_callback(error):
-    return jsonify({'error': 'Neplatný token', 'detail': error}), 401
-
+    def invalid_token_callback(error):
+        return jsonify({'error': 'Neplatný token', 'detail': error}), 401
 
     @jwt.unauthorized_loader
     def missing_token_callback(error):
