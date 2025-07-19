@@ -153,6 +153,21 @@ def init_database(app):
                     description='Administrátor s plným přístupem ke správě vozového parku'
                 )
                 db.session.add(admin_role)
+                            # Vytvoření admin uživatele, pokud neexistuje
+            if not AppUser.query.filter_by(intranet_id='admin').first():
+                fleet_admin_role = Role.query.filter_by(role_name='Fleet Administrator').first()
+                admin_user = AppUser(
+                    intranet_id='admin',
+                    first_name='System',
+                    last_name='Administrator',
+                    email='admin@example.com',
+                    role_id=fleet_admin_role.role_id if fleet_admin_role else None
+                )
+                db.session.add(admin_user)
+                print("Vytvořen výchozí admin uživatel (intranet_id='admin')")
+
+
+    
             
             # Vytvoření ukázkových vozidel, pokud žádná neexistují
             if not Vehicle.query.first():
